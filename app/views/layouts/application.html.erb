@@ -11,6 +11,10 @@
 
   <body>
     <div class="container">
+      <ul class="nav nav-tabs pull-left">
+          <%= link_to 'Bloccipedia', root_path %>
+          <%= link_to 'Wikis', wikis_path %>
+      </ul>
       <ul class="nav nav-tabs pull-right">
           <% if user_signed_in? %>
             Signed in as: <strong><%= current_user.email %></strong> |
