@@ -1,10 +1,10 @@
-<h1><%= @wiki.name %></h1>
+<h1 class="col-md-8" ><%= @wiki.title %></h1>
 
-<% if wiki.user %>
+<% if @wiki.user %>
   <%= link_to "Edit Wiki", edit_wiki_path, class: 'btn btn-success' %>
   <%= link_to "Delete Wiki", @wiki, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to delete this wiki?' } %>
 <% end %>
 
 <div class="col-md-8">
-  <p class="lead"><%= @wiki.body %></p>
+  <p><%= @wiki.body %></p>
 </div>

@@ -14,6 +14,7 @@ class WikisController < ApplicationController
 
   def create
     @wiki = Wiki.new(wiki_params)
+    @wiki.user_id = current_user.id
 
     if @wiki.save
       flash[:notice] = "Wiki was saved."
@@ -53,8 +54,8 @@ class WikisController < ApplicationController
     @wiki = Wiki.find(params[:id])
 
     if @wiki.destroy
-      flash[:notice] = "#{wiki.title} was deleted successfully."
-      redirect_to [@wiki]
+      flash[:notice] = "#{@wiki.title} was deleted successfully."
+      redirect_to action: :index
     else
       flash.now[:alert] = "There was an error deleting the Wiki. Please try again."
       render :show
