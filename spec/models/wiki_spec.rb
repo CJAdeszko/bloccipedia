@@ -1,5 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Wiki, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let (:wiki) { create(:wiki) }
+
+  describe "attributes" do
+    it "has title, body, public, and user attributes" do
+      expect(wiki).to have_attributes(title: wiki.title, body: wiki.body, user: wiki.user)
+    end
+  end
+  
 end
