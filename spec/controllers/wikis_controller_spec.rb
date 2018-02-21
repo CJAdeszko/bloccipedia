@@ -49,7 +49,8 @@ RSpec.describe WikisController, type: :controller do
 
   context "standard user" do
     before do
-      sign_in @user, scope: :standard
+      @user = User.create( name: 'test', email: 'testuser@test.com', password: 'password' )
+      sign_in @user, scope: :user
     end
 
     describe "GET show" do
