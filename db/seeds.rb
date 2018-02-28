@@ -20,7 +20,8 @@ users = User.all
   Wiki.create!(
     title: Faker::String.random(10),
     body: Faker::String.random(20),
-    user: users.sample
+    user: users.sample,
+    private: false,
   )
 end
 wikis = Wiki.all

@@ -3,7 +3,13 @@ class WikisController < ApplicationController
 
 
   def index
-    @wikis = Wiki.all
+    if current_user.nil? || current_user.standard?
+      @wikis = Wiki.where( private: false )
+    elsif current_user.premium?
+      @wikis = Wiki.where( "user_id = ? OR private = ?", current_user.id, false)
+    else
+      @wikis = Wiki.all
+    end
   end
 
 
@@ -15,7 +21,8 @@ class WikisController < ApplicationController
   def create
     @wiki = Wiki.new(wiki_params)
     @wiki.user = current_user
-    
+    @wiki.private ||= false
+
     if @wiki.save
       flash[:notice] = "Wiki was saved."
       redirect_to [@wiki]

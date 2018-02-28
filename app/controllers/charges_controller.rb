@@ -56,6 +56,14 @@ class ChargesController < ApplicationController
     subscription = Stripe::Subscription.retrieve(current_user.stripe_id)
     subscription.delete
 
+    #locate all user wikis and set to public
+    @wikis = Wiki.where(user_id: current_user.id)
+    @wikis.each do |wiki|
+      wiki.private = false
+      wiki.save
+    end
+
+    #change user role from premium to standard
     current_user.role = "standard"
     current_user.save
 
