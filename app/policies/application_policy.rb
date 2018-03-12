@@ -6,8 +6,4 @@ class ApplicationPolicy
     @wiki = wiki
   end
 
-  def update?
-    user.present?
-  end
-
 end

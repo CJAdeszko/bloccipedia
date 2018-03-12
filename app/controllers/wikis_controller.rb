@@ -3,13 +3,7 @@ class WikisController < ApplicationController
 
 
   def index
-    if current_user.nil? || current_user.standard?
-      @wikis = Wiki.where( private: false )
-    elsif current_user.premium?
-      @wikis = Wiki.where( "user_id = ? OR private = ?", current_user.id, false)
-    else
-      @wikis = Wiki.all
-    end
+    @wikis = policy_scope(Wiki)
   end
 
 

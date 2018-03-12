@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
+
   get 'users/new'
 
   devise_for :users
 
-  resources :wikis
+  resources :wikis do
+    resources :collaborators, only: [:create, :destroy]
+  end
 
   get 'welcome/index'
 
