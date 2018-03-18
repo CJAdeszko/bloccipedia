@@ -4,8 +4,10 @@ Rails.application.routes.draw do
 
   devise_for :users
 
+  resources :collaborators
+
   resources :wikis do
-    resources :collaborators, only: [:create, :destroy]
+    resources :collaborators, only: [:new, :create, :destroy]
   end
 
   get 'welcome/index'

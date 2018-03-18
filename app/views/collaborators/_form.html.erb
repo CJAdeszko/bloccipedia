@@ -1,11 +1,15 @@
   <% if wiki.id? && wiki.user == current_user %>
     <%= form_tag(wiki_collaborators_path(@wiki), method: :post) do %>
       <%= text_field :search, params[:search], placeholder: "Add a collaborator by email..." %>
+      <br>
+      <br>
       <%= submit_tag "Add collaborator", class: 'btn btn-success' %>
     <% end %>
   <% end %>
-  
+
   <h4> Wiki Collaborators </h4>
-  <%= @wiki.collaborators.each do |colab| %>
-    <p> colab </p>
+  <% @wiki.collaborators.each do |collab| %>
+    <% user = User.find(collab.user_id) %>
+    <p><%= user.email %></p>
+    <%= link_to 'Remove Collaborator', wiki_collaborator_path(@wiki, collab), method: :delete %>
   <% end %>
