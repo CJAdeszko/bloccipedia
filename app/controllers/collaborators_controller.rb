@@ -8,15 +8,18 @@ class CollaboratorsController < ApplicationController
     @user = User.find_by_email(params[:search])
 
     if @user
-      @collaborator = Collaborator.new(wiki_id: @wiki.id, user_id: @user.id)
-      if @collaborator.save
-        flash[:notice] = "Collaborator successfully added to #{@wiki.title}."
+      if @user.id == current_user.id
+        flash[:alert] = "Cannot add current user as a collaborator"
+      elsif @wiki.collaborators.exists?(user_id: @user.id)
+        flash[:alert] = "User is already a collaborator on this wiki"
       else
-        flash[:alert] = "There was a problem adding the collaborator. Please try again."
-        redirect_to @wiki
+        @collaborator = Collaborator.new(wiki_id: @wiki.id, user_id: @user.id)
+        if @collaborator.save
+          flash[:notice] = "Collaborator successfully added to #{@wiki.title}."
+        else
+          flash[:alert] = "There was a problem adding the collaborator. Please try again."
+        end
       end
-    else
-      flash[:alert] = "Invalid email address for collaborator. Please try again"
     end
     redirect_to @wiki
   end
